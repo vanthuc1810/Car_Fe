@@ -1,0 +1,124 @@
+.categories-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-flow: column nowrap;
+    margin: 10rem auto 5rem auto;
+  }
+  .categories-heading {
+    font-size: 4rem;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: -60px;
+  }
+  
+  .category-card img {
+    width: 100%;
+    opacity: 0.5;
+    z-index: 0;
+  }
+  .category-card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .img-cont {
+    background-color: black;
+    z-index: -1;
+  }
+  
+  .category-card h3 {
+    position: absolute;
+    margin: auto;
+    padding: 1rem 2.5rem;
+    z-index: 1;
+    font-weight: 800;
+    border: none;
+    border-radius: 25px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(207, 207, 207);
+  }
+  .category-card h3:hover {
+    background-color: white;
+  }
+  
+
+  .categories-search{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 40px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Ẩn phần hình ảnh vượt ra ngoài container */
+
+  }
+  .categories-search-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .search-car-container {
+    padding-right: 24px;
+  }
+  .search-car-container-input{
+
+  }
+  .search-car-container-input label{
+    display: flex;
+    margin: 16px 0px;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .search-car-container-input input {
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 4px;
+  }
+
+  .search-now-btn {
+    opacity: 0.9;
+    padding: 8px 16px;
+    border-radius: 16px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(217, 217, 217);
+  }
+  .search-now-btn:hover{
+    opacity: 1.0;
+  }
+
+  @media (min-width: 768px) {
+    .categories-container {
+      flex-flow: row nowrap;
+      width: 95vw;
+      height: 600px;
+      justify-content: space-between;
+    }
+    .categories-heading {
+      font-size: 7rem;
+      text-align: center;
+      margin-top: 100px;
+      margin-bottom: -100px;
+    }
+  
+    .category-card {
+      align-items: stretch;
+    }
+  
+    .img-cont {
+      flex-grow: 1;
+      border: 0.2px solid rgb(255, 255, 255);
+      border-radius: 20px 20px 20px 20px;
+    }
+    .category-card img {
+      object-fit: cover;
+      height: 100%;
+      opacity: 0.5;
+      border-radius: 20px;
+      height: 100%;
+    }
+  
+    .category-card h3 {
+      bottom: 50px;
+    }
+  }
+  
