@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyInfo } from "../../../../../api/user-api/getUserApi";
 import { confirmDepositApi } from "../../../../../api/booking-api/confirmDepositApi";
+import { Rating } from "@mui/material";
 
-export const CartItemDescription = ({ car, booking }) => {
+export const CartItemDescription = ({ car, booking, feedback}) => {
   const [user, setUser] = useState(null);
   const [status, setStatus] = useState(booking?.status);
   const handleConfirmDeposit = () => {
@@ -19,10 +20,15 @@ export const CartItemDescription = ({ car, booking }) => {
   return (
     <div className="product-description d-flex flex-column">
       <div className="content">
-        <h3>{car?.name}</h3>
+        <h3>Car name: {car?.name}</h3>
         <h6>Deposite: {car?.deposite} $</h6>
         <h6>Base price: {car?.baseprice} $</h6>
         <h6 className="text-success">Status: {status}</h6>
+        <Rating
+          defaultValue={feedback?.rate}
+          readOnly={true}
+        />
+        <h6>{feedback?.content}</h6>
       </div>
       {user?.role == "CUSTOMER" && (
         <div
@@ -33,15 +39,7 @@ export const CartItemDescription = ({ car, booking }) => {
         </div>
       )}
 
-      {/* {user?.role == "CAROWNER" &&  status == "Pending Deposit" &&(
-        <div
-          className="button-section btn btn-dark px-4 py-2 mt-2 "
-          onClick={handleConfirmDeposit}
-        >
-          Confirm deposite
-        </div>
-      )} */}
-      {user?.role == "CAROWNER" &&  status == "Wait Confirm" &&(
+      {user?.role == "CAROWNER" &&  status == "Pending Deposit" &&(
         <div
           className="button-section btn btn-dark px-4 py-2 mt-2 "
           onClick={handleConfirmDeposit}

@@ -8,7 +8,6 @@ export const ProductImage = ({booking}) =>{
         if(booking){
           getCarByIdCarApi(booking?.carIdcar, localStorage.getItem('authToken')).then(response => {
             setCar(response.result);
-            console.log("setCar");  
           });
         }
     },[booking])  

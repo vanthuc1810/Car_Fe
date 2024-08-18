@@ -13,6 +13,7 @@ import { Forgot } from "../pages/Forgot/Forgot";
 import { ResetPassword } from "../pages/Forgot/ResetPasword/ResetPassword";
 import { MyCar } from "../pages/MyCar/MyCar";
 import { AddCar } from "../pages/AddCar/AddCar";
+import { FeedBack } from "../pages/Feedback/FeedBack";
 
 export const NavRoutes = () => {
     return (
@@ -31,6 +32,7 @@ export const NavRoutes = () => {
             <Route path="/resetpassword/:email" element={<ResetPassword/>}/>
             <Route path="/myCar" element={<MyCar/>} />
             <Route path="/addCar" element={<AddCar/>} />
+            <Route path="/feedback" element={<FeedBack/>}/>
         </Routes>
     );
 }

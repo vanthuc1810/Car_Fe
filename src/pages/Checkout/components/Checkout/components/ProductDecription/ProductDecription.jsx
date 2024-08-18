@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { Rating } from "@mui/material";
 import "./ProductDecription.scss";
 import { useEffect, useState } from "react";
 import {
@@ -12,6 +13,7 @@ import {
 } from "../../../../../../api/booking-api/bookingApi";
 import { getCarByIdCarApi } from "../../../../../../api/car-api/getCarByIdBookingApi";
 import { bankTransferApi } from "../../../../../../api/booking-api/bankTransferApi";
+import { ratetingApi } from "../../../../../../api/feedback-api/feedbackApi";
 export const ProductDecription = ({ booking, updateBooking }) => {
   const [isPendingDeposit, setIsPendingDeposit] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -19,8 +21,21 @@ export const ProductDecription = ({ booking, updateBooking }) => {
   const [isComplete, setIsComplete] = useState(false);
   const [isInProgress, setIsInProgress] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
+  const [isWaitConfirm,setIsWaitConfirm] = useState(false);
   const [show, setShow] = useState(false);
+  const [rateData, setRateData] = useState({
+    rate: 0,
+    content: "",
+  });
 
+  const handleRating = (e) => {
+    setRateData({ ...rateData, [e.target.name]: e.target.value });
+  };
+
+  const handlePostRating = (idbooking) => {
+    
+    ratetingApi(idbooking, rateData).then(res => console.log(res.result));
+  }
   const [car, setCar] = useState(null);
 
   const navigate = useNavigate();
@@ -52,7 +67,7 @@ export const ProductDecription = ({ booking, updateBooking }) => {
       bankTransferApi(
         booking.idbooking,
         localStorage.getItem("authToken")
-      ).then((response) => window.location.href = response);
+      ).then((response) => (window.location.href = response));
     }
   };
   useEffect(() => {
@@ -79,6 +94,10 @@ export const ProductDecription = ({ booking, updateBooking }) => {
       setIsCancelled(true);
       setIsConfirmed(false);
     }
+    if (booking?.status == "Wait Confirm") {
+      setIsPendingDeposit(false);
+      setIsWaitConfirm(true);
+    }
   }, [booking]);
   useEffect(() => {
     if (booking) {
@@ -87,7 +106,6 @@ export const ProductDecription = ({ booking, updateBooking }) => {
         localStorage.getItem("authToken")
       ).then((response) => {
         setCar(response.result);
-        console.log("setCar");
       });
     }
   }, [booking]);
@@ -123,12 +141,27 @@ export const ProductDecription = ({ booking, updateBooking }) => {
           </button>
         </div>
       )}
+      {isWaitConfirm && (
+        <div className="product-card-buttons-container mt-2">
+          <button className="add-to-cart-btn">
+            Wait the Carowner confirm!
+          </button>
+        </div>
+      )}
       {isCancelled ||
         (isComplete && (
           <div className="product-card-buttons-container mt-2">
-            <button className="add-to-cart-btn" onClick={() => navigate("/")}>
-              Back
-            </button>
+            <div className="row justify-content-between">
+              <button
+                className="col-5 add-to-cart-btn"
+                onClick={() => navigate("/")}
+              >
+                Back to home
+              </button>
+              <button className="col-5 add-to-cart-btn" onClick={handleShow}>
+                Rate this car
+              </button>
+            </div>
           </div>
         ))}
       {isInProgress && (
@@ -162,14 +195,30 @@ export const ProductDecription = ({ booking, updateBooking }) => {
         <Modal.Header closeButton>
           <Modal.Title>Confirm booking</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are already booking this car!</Modal.Body>
+        <Modal.Body>
+          <div className="body-content">
+            <h6>Give us your feedback!</h6>
+            <textarea
+              name="content"
+              rows="5"
+              cols="50"
+              placeholder=""
+              onChange={handleRating}
+              className="p-2 border-0"
+            ></textarea>
+            <Rating
+              onChange={handleRating}
+              name="rate"
+            />
+          </div>
+        </Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button
-            variant="primary"
-            onClick={() => handlePickUp}
+            onClick={() => handlePostRating(booking?.idbooking)}
             className="btn btn-dark"
           >
             Confirm

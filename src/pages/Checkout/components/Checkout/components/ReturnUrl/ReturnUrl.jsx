@@ -11,8 +11,11 @@ export const ReturnUrl = () => {
   const vnp_ResponseCode = queryParams.get("vnp_ResponseCode");
   const vnp_OrderInfo = queryParams.get("vnp_OrderInfo");
   const vnp_PayDate = queryParams.get("vnp_PayDate");
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    confirmReturnUrlApi(vnp_ResponseCode,vnp_OrderInfo,localStorage.getItem("authToken"));
+  },[])
   return (
     <div
       className="container justify-content-center d-flex align-items-center"

@@ -96,6 +96,15 @@ export const Header = () => {
                 </li>
                 
               )}
+              {user?.role == "CAROWNER" && (
+                <li
+                  className="text-dark p-2 ms-2 w-100 text-start"
+                  onClick={() => navigate("/feedback")}
+                >
+                  My feedback
+                </li>
+                
+              )}
               <li
                 className="text-dark p-2 ms-2 w-100 text-start"
                 onClick={handleLogout}
