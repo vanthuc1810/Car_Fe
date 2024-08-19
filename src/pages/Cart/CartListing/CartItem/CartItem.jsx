@@ -13,7 +13,7 @@ export const CartItem = ({ booking }) => {
     );
   }, []);
   return (
-    <div className="cart-product-card d-flex align-items-center" key={booking?.idbooking}>
+    <div className="cart-product-card d-flex align-items-center " key={booking?.idbooking}>
       <CartItemImage car={car} />
       <CartItemDescription car={car} booking={booking} />
     </div>
